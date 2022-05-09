@@ -1,4 +1,4 @@
-const playerSelection = 'paper';
+const playerSelection = playerPlay();
 const computerSelection = computerPlay();
 
 // Randomly return Rock, Paper, or Scissors
@@ -21,9 +21,22 @@ function computerPlay() {
     
 }
 
+function playerPlay() {
+    let choice = prompt('Enter Rock, Paper, or Scissors');
+    let selection = choice.toUpperCase();
+
+    while (selection != "ROCK" && selection != "PAPER" && selection != "SCISSORS") {
+        if (selection != "ROCK" && selection != "PAPER" && selection != "SCISSORS") {
+            choice = prompt("Invalid option: Please pick Rock, Paper, or Scissors");
+            selection = choice.toUpperCase();
+        } else {
+            return selection
+        }
+    }
+    console.log(selection);
+}
+
 function playRound(playerSelection, computerSelection) {
-    player = playerSelection.toUpperCase();
-    console.log(computerSelection);
     if (player == computerSelection) {
         return 'Draw!'
     } else if (player == 'PAPER' && computerSelection == 'SCISSORS') {
@@ -37,7 +50,10 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+//function game() {
+//    playRound(playerSelection, computerSelection)
+//}
 
-console.log(playRound(playerSelection, computerSelection));
+//console.log(playRound(playerSelection, computerSelection));
 
 
