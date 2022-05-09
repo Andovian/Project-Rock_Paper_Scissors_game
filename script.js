@@ -1,5 +1,5 @@
-const playerSelection = playerPlay();
-const computerSelection = computerPlay();
+let player_wins = 0;
+let computer_wins = 0;
 
 // Randomly return Rock, Paper, or Scissors
 function computerPlay() {
@@ -7,16 +7,14 @@ function computerPlay() {
     const PAPER = 1;
     const SCISSORS = 2;
 
-    let computerChoice = Math.floor(Math.random() * (SCISSORS - ROCK + 1) + ROCK)
-
-    console.log(computerChoice);
+    let computerChoice = Math.floor(Math.random() * (SCISSORS - ROCK + 1) + ROCK);
 
     if (computerChoice == ROCK) {
-        return 'ROCK'
+        return "ROCK"
     } else if (computerChoice == PAPER) {
-        return 'PAPER'
+        return "PAPER"
     } else {
-        return 'SCISSORS'
+        return "SCISSORS"
     }
     
 }
@@ -33,27 +31,38 @@ function playerPlay() {
             return selection
         }
     }
-    console.log(selection);
+    return selection
 }
 
 function playRound(playerSelection, computerSelection) {
-    if (player == computerSelection) {
+    if (playerSelection == computerSelection) {
         return 'Draw!'
-    } else if (player == 'PAPER' && computerSelection == 'SCISSORS') {
-        return `You lose!! ${computerSelection} beats ${player}`
-    } else if (player == 'ROCK' && computerSelection == 'PAPER') {
-        return `You lose!! ${computerSelection} beats ${player}`
-    } else if (player == 'SCISSORS' && computerSelection == 'ROCK') {
-        return `You lose!! ${computerSelection} beats ${player}`
+    } else if (playerSelection == 'PAPER' && computerSelection == 'SCISSORS') {
+        computer_wins += 1;
+        return `You lose!! ${computerSelection} beats ${playerSelection}`
+    } else if (playerSelection == 'ROCK' && computerSelection == 'PAPER') {
+        computer_wins += 1;
+        return `You lose!! ${computerSelection} beats ${playerSelection}`
+    } else if (playerSelection == 'SCISSORS' && computerSelection == 'ROCK') {
+        computer_wins += 1;
+        return `You lose!! ${computerSelection} beats ${playerSelection}`
     } else {
-        return `You win!! ${player} beats ${computerSelection}`
+        player_wins += 1;
+        return `You win!! ${playerSelection} beats ${computerSelection}`
     }
 }
 
-//function game() {
-//    playRound(playerSelection, computerSelection)
-//}
+// console.log(playRound(playerSelection, computerSelection));
 
-//console.log(playRound(playerSelection, computerSelection));
+function game() {
+    for (let i = 0; i < 5; i++) {
+        console.log("Round " + (i + 1));
+        console.log(playRound(playerPlay(), computerPlay()));
+        console.log("Player wins: " + player_wins + ", Computer wins: " + computer_wins);
+    }
+        
+}
+
+game();
 
 
