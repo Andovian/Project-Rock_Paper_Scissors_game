@@ -1,2 +1,4 @@
 # git_test
-Testing testing 123
+Created a rock, paper, scissors game using JavaScript and outputing the results in the console.log
+
+
