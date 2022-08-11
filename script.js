@@ -3,15 +3,18 @@ let computer_wins = 0;
 let round = 1;
 
 const buttons = document.querySelectorAll('button');
+const rounds = document.getElementById('rounds');
+const score = document.getElementById('score');
 const results = document.getElementById('results');
+const finalScore = document.getElementById('finalScore');
+const playerWinCount = document.getElementById('playerWinCount');
+const computerWinCount = document.getElementById('computerWinCount');
 
 buttons.forEach((button) => {
     button.addEventListener('click', function(e) {
         // console.log(e.path[0].id);
         let selection = e.path[0].id;
-        
         playRound(selection, computerSelection());
-        total();
     });
 });
 
@@ -33,40 +36,50 @@ function computerSelection() {
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
-        results.textContent = `Round ${round} Draw | ${playerSelection} = ${computerSelection}`;
-    } else if (playerSelection == 'paper' && computerSelection == 'scissors') {
-        results.textContent = `Round ${round} Lost | ${computerSelection} beats ${playerSelection}`;
-        computer_wins += 1;
+        results.textContent = `Draw ${playerSelection} is equal to ${computerSelection}`;
     } else if (playerSelection == 'rock' && computerSelection == 'paper') {
-        results.textContent = `Round ${round} Lost | ${computerSelection} beats ${playerSelection}`;
+        results.textContent = `${computerSelection} beats ${playerSelection}.`;
+        computer_wins += 1;
+    } else if (playerSelection == 'paper' && computerSelection == 'scissors') {
+        results.textContent = `${computerSelection} beats ${playerSelection}.`;
         computer_wins += 1;
     } else if (playerSelection == 'scissors' && computerSelection == 'rock') {
-        results.textContent = `Round ${round} Lost | ${computerSelection} beats ${playerSelection}`;
+        results.textContent = `${computerSelection} beats ${playerSelection}.`;
         computer_wins += 1;
     } else {
-        results.textContent = `Round ${round} Won | ${playerSelection} beats ${computerSelection}`;
+        results.textContent = `${playerSelection} beats ${computerSelection}.`;
         player_wins += 1;
     }
+    updateScore();
+    endgame();
 }
 
 
-function total() {
-    const total = document.createElement('div');
-    total.setAttribute('id', 'total');
+function updateScore() {
+    playerWinCount.textContent = `Player: ${player_wins}`;
+    computerWinCount.textContent = `Computer: ${computer_wins}`;
+    rounds.textContent = `Round: ${round}`;
+}
 
-    if (player_wins == 5) {
-        total.textContent = `You Win!!! Player wins: ${player_wins},  Computer wins: ${computer_wins}`;
-        results.appendChild(total);
+
+function endgame() {
+    const final = document.createElement('div');
+    final.setAttribute('id', 'final');
+
+    if (player_wins >= 5) {
+        final.textContent = 'You Win!';
+        finalScore.append(final);
         player_wins = 0;
         computer_wins = 0;
         round = 1;
-    } else if (computer_wins == 5) {
-        total.textContent = `You Lose!!! Player wins: ${player_wins},  Computer wins: ${computer_wins}`;
-        results.appendChild(total);
+    } else if (computer_wins >= 5) {
+        final.textContent = 'You Lose.';
+        finalScore.append(final);
         player_wins = 0;
         computer_wins = 0;
         round = 1;
     } else {
         round += 1;
+        finalScore.textContent = "";
     }
 }
